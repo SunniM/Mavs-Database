@@ -3,10 +3,13 @@ package MavsDatabase;
 
 import java.sql.*;
 
+
 public class Main {
     public static void main(String[] args) {
 
       Connection conn = Driver.newConnection();
+      new MainPage();
+
       
       /* 
       THIS IS THE BASIC STRUCTURE FOR WRITING QUERIES
@@ -22,7 +25,7 @@ public class Main {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      
+
       */
 
     }
