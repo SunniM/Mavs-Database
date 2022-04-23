@@ -5,25 +5,27 @@ import java.sql.*;
 
 public class Driver {
 
-    public static void main(String[] args) {
+    public static Connection newConnection(){
         
         String user = "user";
         String password = "password";
+        String ip;
+
+        // IP address depends on location of server. Ask Sunni which ip to use.
+
+        //ip = "localhost"; //use only if hosting mysql server
+        //ip = "10.177.183.196";
+        ip = " 10.8.66.31"; 
+
         try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+ip+":3306/dallas_mavs", user, password);
+            return conn;
 
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dallas_mavs", user, password);
-
-            Statement statement = conn.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("select * from players");
-
-            while(resultSet.next()) {
-
-                System.out.println(resultSet.getString("number"));
-            }
         }
         catch(Exception e) {
             e.printStackTrace();
+            return null;
         }
+
     }
 }
