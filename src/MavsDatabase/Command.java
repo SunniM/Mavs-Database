@@ -6,7 +6,6 @@ package MavsDatabase;
  */
 public abstract class Command 
 {
-    //TODO: add necessary fields to this class
    
     public Command() {
         System.out.println("testing");
