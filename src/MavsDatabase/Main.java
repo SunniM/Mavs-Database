@@ -11,12 +11,13 @@ public class Main {
       new MainPage(conn);
 
       
-      /* 
-      THIS IS THE BASIC STRUCTURE FOR WRITING QUERIES
+      
+      //THIS IS THE BASIC STRUCTURE FOR WRITING QUERIES
       
       try {
+        int temp = 7;
         Statement myStatement = conn.createStatement();
-        myStatement.executeQuery("select * from players");
+        myStatement.executeQuery("select * from players where number="+temp);
         ResultSet myResultSet = myStatement.getResultSet();
         while(myResultSet.next()){
           System.out.println(myResultSet.getString("number") + " "+ myResultSet.getString("name"));
@@ -25,8 +26,6 @@ public class Main {
       } catch (Exception e) {
         e.printStackTrace();
       }
-
-      */
 
     }
 }
