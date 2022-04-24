@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
       Connection conn = Driver.newConnection();
-      new MainPage();
+      new MainPage(conn);
 
       
       /* 

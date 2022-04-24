@@ -5,13 +5,16 @@ import java.awt.Container;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
 import java.util.Scanner;
 
 import javax.swing.*;
 
-public class MainPage implements ActionListener {
+public class MainPage {
 
-    public static void addComponentsToPane(Container pane) {
+    Connection connection;
+
+    private void addComponentsToPane(Container pane) {
 
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
@@ -26,33 +29,46 @@ public class MainPage implements ActionListener {
             System.err.println("Error: FILE NOT FOUND");
 
         }
+        String text, commandName;
+        String[] fileLine;
         while(input.hasNext()) {
-        addAButton(input.nextLine(), pane);
+            fileLine = input.nextLine().split(",");
+            text = fileLine[0];
+            commandName = fileLine[1].trim();
+            addAButton(text,pane,Command.CreateCommandDynamically(commandName, connection));
         }
-        addAButton("Close", pane, new ExitCommand());
+        addAButton("Close", pane, new ExitCommand(connection));
         input.close();
     }
 
-    private static void addAButton(String text, Container container) {
+    /*
+    private void addAButton(String text, Container container) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setSize(100, 50);
         container.add(button);
         
-    }
+    } */
 
-    private static void addAButton(String text, Container container, Command command) {
+    private void addAButton(String text, Container container, Command command) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                command.Execute();
+            }
+        });
         
     }
-    private static void addALabel(String text,Container container) {
+    private void addALabel(String text,Container container) {
         JLabel label = new JLabel(text);
        // label.setHorizontalAlignment(SwingConstants.RIGHT);
         container.add(label);
     }
     
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Dallas Mavericks Player Statisics");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,16 +81,12 @@ public class MainPage implements ActionListener {
         frame.setVisible(true);
     }
 
-    public MainPage() {
+    public MainPage(Connection connection) {
+        this.connection = connection;
         createAndShowGUI();
     }  
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
 
     
 }
