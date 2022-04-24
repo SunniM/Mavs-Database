@@ -1,17 +1,18 @@
 package MavsDatabase;
 
-import java.sql.Connection;
+import java.sql.*;
 
-public class PLineup extends Command {
-    
-    public PLineup(Connection connection) {
+public class OffLineup extends Command {
+
+    public OffLineup(Connection connection) {
         super(connection);
         //TODO Auto-generated constructor stub
     }
 
+
+
     @Override
     public void Execute() {
-        
         // TODO Auto-generated method stub
         
     }
