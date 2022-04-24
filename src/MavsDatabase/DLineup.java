@@ -11,7 +11,7 @@ public class DLineup extends Command {
 
     @Override
     public void Execute() {
-        
+        System.out.println("testing");
         // TODO Auto-generated method stub
         
     }

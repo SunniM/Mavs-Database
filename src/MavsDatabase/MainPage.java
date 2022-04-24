@@ -1,7 +1,7 @@
 package MavsDatabase;
 
 import java.awt.Component;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,11 +14,11 @@ public class MainPage {
 
     Connection connection;
 
-    private void addComponentsToPane(Container pane) {
+    private void addComponentsToPane(JPanel panel) {
 
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        panel.setLayout(new CardLayout());
 
-        addALabel("Please Select a Command", pane);
+        addALabel("Please Select a Command", panel);
         
         File file = new File("Menu.dat");
         Scanner input = new Scanner(System.in);
@@ -35,20 +35,11 @@ public class MainPage {
             fileLine = input.nextLine().split(",");
             text = fileLine[0];
             commandName = fileLine[1].trim();
-            addAButton(text,pane,Command.CreateCommandDynamically(commandName, connection));
+            addAButton(text,panel,Command.CreateCommandDynamically(commandName, connection));
         }
-        addAButton("Close", pane, new ExitCommand(connection));
+        addAButton("Close", panel, new ExitCommand(connection));
         input.close();
     }
-
-    /*
-    private void addAButton(String text, Container container) {
-        JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setSize(100, 50);
-        container.add(button);
-        
-    } */
 
     private void addAButton(String text, Container container, Command command) {
         JButton button = new JButton(text);
@@ -73,8 +64,9 @@ public class MainPage {
         JFrame frame = new JFrame("Dallas Mavericks Player Statisics");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
-        //Set up the content pane.
-        addComponentsToPane(frame.getContentPane());
+        //Set up the content panel.
+        
+        addComponentsToPane(new JPanel());
  
         //Display the window.
         frame.pack();
