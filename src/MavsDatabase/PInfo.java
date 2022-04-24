@@ -17,7 +17,7 @@ public class PInfo extends Command {
         try {
             int temp = 7;
             Statement myStatement = conn.createStatement();
-            myStatement.executeQuery("select * from players #where number="+temp);
+            myStatement.executeQuery("select * from players");
             ResultSet myResultSet = myStatement.getResultSet();
             return myResultSet;            
           } catch (Exception e) {
