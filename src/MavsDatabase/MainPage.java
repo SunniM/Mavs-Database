@@ -14,10 +14,12 @@ public class MainPage {
 
     Connection connection;
 
-    private void addComponentsToPane(JPanel panel) {
+    private void addComponentsToPane(Container panel) {
 
-        panel.setLayout(new CardLayout());
-
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        addALabel("OR", panel);
+        JTextField jTextField = new JTextField("Player Number");
         addALabel("Please Select a Command", panel);
         
         File file = new File("Menu.dat");
@@ -65,9 +67,10 @@ public class MainPage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Set up the content panel.
+        JRadioButton rb = new JRadioButton("All Players");
+        frame.add(rb);
+        addComponentsToPane(frame.getContentPane());
         
-        addComponentsToPane(new JPanel());
- 
         //Display the window.
         frame.pack();
         frame.setVisible(true);
