@@ -1,9 +1,7 @@
 package MavsDatabase;
 
 import java.sql.*;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -65,12 +63,10 @@ public class PInfo extends Command {
         }
         return list.stream().map(l -> l.stream().toArray(String[]::new)).toArray(String[][]::new);
     }
-    @Override
-    public void Execute() {
 
+    @Override
+    public void Execute(boolean allPlayers, int playerNum) {
         createAndShowGUI();
-        // TODO Auto-generated method stub
-        
     }
     
 }

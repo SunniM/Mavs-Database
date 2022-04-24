@@ -13,13 +13,18 @@ import javax.swing.*;
 public class MainPage {
 
     Connection connection;
+    JRadioButton rb;
+    boolean allPlayers = false;
+    int playerNum;
 
     private void addComponentsToPane(Container panel) {
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setSize(1000, 400);
         
-        addALabel("OR", panel);
-        JTextField jTextField = new JTextField("Player Number");
+        addALabel("OR Enter Player Number", panel);
+        addATextField("", panel);
+        
         addALabel("Please Select a Command", panel);
         
         File file = new File("Menu.dat");
@@ -27,7 +32,6 @@ public class MainPage {
         try {
             input = new Scanner(file);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             System.err.println("Error: FILE NOT FOUND");
 
         }
@@ -42,7 +46,10 @@ public class MainPage {
         addAButton("Close", panel, new ExitCommand(connection));
         input.close();
     }
-
+    private void addATextField(String text, Container container) {
+        JTextField jTextField = new JTextField(text,SwingConstants.CENTER);
+        container.add(jTextField);
+    }
     private void addAButton(String text, Container container, Command command) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -50,13 +57,15 @@ public class MainPage {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                command.Execute();
-            }
+                if(rb.isSelected())
+                    allPlayers = true;
+                command.Execute(allPlayers, playerNum);
+            }        
         });
         
     }
     private void addALabel(String text,Container container) {
-        JLabel label = new JLabel(text);
+        JLabel label = new JLabel(text, SwingConstants.CENTER);
        // label.setHorizontalAlignment(SwingConstants.RIGHT);
         container.add(label);
     }
@@ -67,7 +76,7 @@ public class MainPage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Set up the content panel.
-        JRadioButton rb = new JRadioButton("All Players");
+        rb = new JRadioButton("All Players");
         frame.add(rb);
         addComponentsToPane(frame.getContentPane());
         
