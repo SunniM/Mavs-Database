@@ -34,4 +34,6 @@ public abstract class Command
     }
     //An abstract method that must be overriden in subclasses of class Command
     public abstract void Execute();
+    public abstract void Execute(String playerNum);
+
 }

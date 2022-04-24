@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class DefStats extends Command {
 
+    String playerNum;
+
     public DefStats(Connection connection) {
         super(connection);
     }
@@ -62,6 +64,12 @@ public class DefStats extends Command {
 
     @Override
     public void Execute() {
+        createAndShowGUI();
+    }
+
+    @Override
+    public void Execute(String playerNum) {
+        this.playerNum=playerNum;
         createAndShowGUI();
     }
 

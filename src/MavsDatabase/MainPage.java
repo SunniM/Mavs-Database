@@ -14,7 +14,7 @@ public class MainPage {
 
     Connection connection;
 
-    JTextField jTextField;
+    JTextField jTextField = new JTextField();
     JRadioButton rb;
 
     boolean allPlayers = false;
@@ -24,7 +24,15 @@ public class MainPage {
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setSize(1000, 400);
+       
+        addALabel("Select:", panel);
 
+        rb = new JRadioButton("All Players");
+        panel.add(rb);
+
+
+        addALabel("OR Enter Player Number:", panel);
+        panel.add(jTextField);
         addALabel("Please Select a Command", panel);
 
         File file = new File("Menu.dat");
@@ -54,8 +62,14 @@ public class MainPage {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                command.Execute();
+                if(rb.isSelected()) {
+                    allPlayers=true;
+                    command.Execute();
+                }
+                else
+                    playerNum=jTextField.getText();
+                    command.Execute(playerNum);;
+                
             }
         });
 

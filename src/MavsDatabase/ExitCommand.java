@@ -16,5 +16,11 @@ public class ExitCommand extends Command {
 
     }
 
+    @Override
+    public void Execute(String playerNum) {
+        System.exit(0);
+
+    }
+
     
 }

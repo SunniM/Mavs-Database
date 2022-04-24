@@ -8,6 +8,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class PInfo extends Command {
+
+    String playerNum;
     
     public PInfo(Connection connection) {
         super(connection);
@@ -71,4 +73,9 @@ public class PInfo extends Command {
         createAndShowGUI();
     }
     
+    @Override
+    public void Execute(String playerNum) {
+        this.playerNum=playerNum;
+        createAndShowGUI();
+    }
 }

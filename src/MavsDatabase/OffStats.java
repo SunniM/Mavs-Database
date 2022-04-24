@@ -6,13 +6,29 @@ import javax.swing.*;
 
 public class OffStats extends Command{
 
+    String playerNum = null;
+
     public OffStats(Connection connection) {
         super(connection);
     }
     public ResultSet makeQuery() {
         try {
             Statement myStatement = conn.createStatement();
-            myStatement.executeQuery("select * from offensive_stats");
+            myStatement.executeQuery("select * from offensive_stats, players where number=player_num");
+            ResultSet myResultSet = myStatement.getResultSet();
+            return myResultSet;            
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          return null;
+    
+    }
+
+    public ResultSet makeQuery(String number) {
+
+        try {
+            Statement myStatement = conn.createStatement();
+            myStatement.executeQuery("select * from offensive_stats, players where number=player_num and number="+number);
             ResultSet myResultSet = myStatement.getResultSet();
             return myResultSet;            
           } catch (Exception e) {
@@ -26,9 +42,14 @@ public class OffStats extends Command{
     public  void createAndShowGUI() {
 
         JFrame frame = new JFrame("Offensive Statistics");
-        String[] column = {"PLAYER_NUM","POINTS", "TURNOVERS", "2PT_FGA", "2PT_FG", "3PT_FGA", "3PT_FG", "FTA", "FREETHROW", "OFFENSIVE_RBD", "ASSISTS",};
+        String[] column = {"NAME","PLAYER_NUM","POINTS", "TURNOVERS", "2PT_FGA", "2PT_FG", "3PT_FGA", "3PT_FG", "FTA", "FREETHROW", "OFFENSIVE_RBD", "ASSISTS",};
 
-        JTable jt = new JTable(getData(column,makeQuery()), column);
+        ResultSet rSet;
+        if(playerNum==null)
+            rSet=makeQuery();
+        else
+            rSet=makeQuery(playerNum);
+        JTable jt = new JTable(getData(column,rSet), column);
         jt.setBounds(30,40,1000,3000);
         JScrollPane sp=new JScrollPane(jt);
         frame.add(sp);
@@ -64,6 +85,12 @@ public class OffStats extends Command{
 
     @Override
     public void Execute() {
+        createAndShowGUI();
+    }
+
+    @Override
+    public void Execute(String playerNum) {
+        this.playerNum=playerNum;
         createAndShowGUI();
     }
     
