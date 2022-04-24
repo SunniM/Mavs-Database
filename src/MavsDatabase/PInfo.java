@@ -12,6 +12,7 @@ public class PInfo extends Command {
     public PInfo(Connection connection) {
         super(connection);
     }
+
     public ResultSet makeQuery() {
         try {
             int temp = 7;
@@ -26,12 +27,13 @@ public class PInfo extends Command {
     
     }
 
+
     public  void createAndShowGUI() {
 
         JFrame frame = new JFrame("Player Information");
         String[] column = {"number", "name", "age","height", "weight", "games_played", "years_played","minutes_played","personal_fouls"};
 
-        JTable jt = new JTable(getData(column), column);
+        JTable jt = new JTable(getData(column,makeQuery()), column);
         jt.setBounds(30,40,1000,3000);
         JScrollPane sp=new JScrollPane(jt);
         frame.add(sp);
@@ -41,9 +43,9 @@ public class PInfo extends Command {
 
         //JTable table = new JTable(resultSet.getMetaData();
     }
-    public String[][] getData(String[] column) {
 
-        ResultSet resultSet = makeQuery();
+    public String[][] getData(String[] column, ResultSet resultSet) {
+
         LinkedList<LinkedList<String>> list = new LinkedList<>();
         LinkedList<String> row;
         try {
@@ -63,9 +65,10 @@ public class PInfo extends Command {
         }
         return list.stream().map(l -> l.stream().toArray(String[]::new)).toArray(String[][]::new);
     }
+    
 
     @Override
-    public void Execute(boolean allPlayers, int playerNum) {
+    public void Execute() {
         createAndShowGUI();
     }
     

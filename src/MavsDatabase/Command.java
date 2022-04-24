@@ -33,5 +33,5 @@ public abstract class Command
         return command;
     }
     //An abstract method that must be overriden in subclasses of class Command
-    public abstract void Execute(boolean allPlayers, int playerNum);
+    public abstract void Execute();
 }

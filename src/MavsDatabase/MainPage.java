@@ -13,17 +13,18 @@ import javax.swing.*;
 public class MainPage {
 
     Connection connection;
+
+    JTextField jTextField;
     JRadioButton rb;
+
     boolean allPlayers = false;
-    int playerNum;
+    String playerNum;
 
     private void addComponentsToPane(Container panel) {
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setSize(1000, 400);
-        
-        addALabel("OR Enter Player Number", panel);
-        addATextField("", panel);
+
         
         addALabel("Please Select a Command", panel);
         
@@ -46,10 +47,7 @@ public class MainPage {
         addAButton("Close", panel, new ExitCommand(connection));
         input.close();
     }
-    private void addATextField(String text, Container container) {
-        JTextField jTextField = new JTextField(text,SwingConstants.CENTER);
-        container.add(jTextField);
-    }
+   
     private void addAButton(String text, Container container, Command command) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -57,9 +55,8 @@ public class MainPage {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(rb.isSelected())
-                    allPlayers = true;
-                command.Execute(allPlayers, playerNum);
+                
+                command.Execute();
             }        
         });
         
@@ -76,8 +73,7 @@ public class MainPage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Set up the content panel.
-        rb = new JRadioButton("All Players");
-        frame.add(rb);
+        
         addComponentsToPane(frame.getContentPane());
         
         //Display the window.

@@ -13,9 +13,10 @@ public class Main {
       
       
       //THIS IS THE BASIC STRUCTURE FOR WRITING QUERIES
-      
+      /*
       try {
-        int temp = 7;
+        String temp = "7";
+
         Statement myStatement = conn.createStatement();
         myStatement.executeQuery("select * from players where number="+temp);
         ResultSet myResultSet = myStatement.getResultSet();
@@ -26,6 +27,6 @@ public class Main {
       } catch (Exception e) {
         e.printStackTrace();
       }
-
+      */
     }
 }
