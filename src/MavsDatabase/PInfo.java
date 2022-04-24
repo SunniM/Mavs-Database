@@ -15,7 +15,6 @@ public class PInfo extends Command {
 
     public ResultSet makeQuery() {
         try {
-            int temp = 7;
             Statement myStatement = conn.createStatement();
             myStatement.executeQuery("select * from players");
             ResultSet myResultSet = myStatement.getResultSet();

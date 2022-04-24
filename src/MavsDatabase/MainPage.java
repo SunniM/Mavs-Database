@@ -25,9 +25,8 @@ public class MainPage {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setSize(1000, 400);
 
-        
         addALabel("Please Select a Command", panel);
-        
+
         File file = new File("Menu.dat");
         Scanner input = new Scanner(System.in);
         try {
@@ -38,16 +37,16 @@ public class MainPage {
         }
         String text, commandName;
         String[] fileLine;
-        while(input.hasNext()) {
+        while (input.hasNext()) {
             fileLine = input.nextLine().split(",");
             text = fileLine[0];
             commandName = fileLine[1].trim();
-            addAButton(text,panel,Command.CreateCommandDynamically(commandName, connection));
+            addAButton(text, panel, Command.CreateCommandDynamically(commandName, connection));
         }
         addAButton("Close", panel, new ExitCommand(connection));
         input.close();
     }
-   
+
     private void addAButton(String text, Container container, Command command) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -55,28 +54,29 @@ public class MainPage {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 command.Execute();
-            }        
+            }
         });
-        
+
     }
-    private void addALabel(String text,Container container) {
+
+    private void addALabel(String text, Container container) {
         JLabel label = new JLabel(text, SwingConstants.CENTER);
-       // label.setHorizontalAlignment(SwingConstants.RIGHT);
+        // label.setHorizontalAlignment(SwingConstants.RIGHT);
         container.add(label);
     }
-    
+
     private void createAndShowGUI() {
-        //Create and set up the window.
+        // Create and set up the window.
         JFrame frame = new JFrame("Dallas Mavericks Player Statisics");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        //Set up the content panel.
-        
+
+        // Set up the content panel.
+
         addComponentsToPane(frame.getContentPane());
-        
-        //Display the window.
+
+        // Display the window.
         frame.pack();
         frame.setVisible(true);
     }
@@ -84,9 +84,6 @@ public class MainPage {
     public MainPage(Connection connection) {
         this.connection = connection;
         createAndShowGUI();
-    }  
+    }
 
-
-
-    
 }
