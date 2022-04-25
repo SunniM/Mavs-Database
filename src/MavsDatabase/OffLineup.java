@@ -16,7 +16,7 @@ public class OffLineup extends Command {
     public ResultSet makeQuery() {
         try {
             Statement myStatement = conn.createStatement();
-            myStatement.executeQuery("select * from defensive_stats");
+            myStatement.executeQuery("SELECT Number, Name, 2PT_FG, 3PT_FG, ASSISTS FROM players, offensive_stats WHERE number=PLAYER_NUM AND 3PT_FG IN( SELECT 3PT_FG FROM players, offensive_stats where number=player_num and assists in (select assists from players,offensive_stats where number=player_num order by assists desc) order by 2PT_FG desc) order by 3PT_FG desc limit 5;");
             ResultSet myResultSet = myStatement.getResultSet();
             return myResultSet;
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class OffLineup extends Command {
     public void createAndShowGUI() {
 
         JFrame frame = new JFrame("Defensive Statistics");
-        String[] column = { "PLAYER_NUM", "STEALS", "BLOCKS", "DEFENSIVE_RDB" };
+        String[] column = { "NUMBER", "NAME", "3PT_FG", "2PT_FG", "ASSISTS"};
         JTable jt = new JTable(getData(column, makeQuery()), column);
         jt.setBounds(30, 40, 1000, 3000);
         JScrollPane sp = new JScrollPane(jt);

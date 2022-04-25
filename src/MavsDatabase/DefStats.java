@@ -16,7 +16,7 @@ public class DefStats extends Command {
     public ResultSet makeQuery() {
         try {
             Statement myStatement = conn.createStatement();
-            myStatement.executeQuery("select * from defensive_stats");
+            myStatement.executeQuery("select * from defensive_stats, players where number=player_num");
             ResultSet myResultSet = myStatement.getResultSet();
             return myResultSet;
         } catch (Exception e) {
@@ -26,11 +26,30 @@ public class DefStats extends Command {
 
     }
 
+    public ResultSet makeQuery(String number) {
+
+        try {
+            Statement myStatement = conn.createStatement();
+            myStatement.executeQuery("select * from defensive_stats, players where number=player_num and number="+number);
+            ResultSet myResultSet = myStatement.getResultSet();
+            return myResultSet;            
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          return null;
+    
+    }
+
     public void createAndShowGUI() {
 
         JFrame frame = new JFrame("Defensive Statistics");
-        String[] column = { "PLAYER_NUM", "STEALS", "BLOCKS", "DEFENSIVE_RDB" };
-        JTable jt = new JTable(getData(column, makeQuery()), column);
+        String[] column = { "NAME", "NUMBER", "STEALS", "BLOCKS", "DEFENSIVE_RDB" };
+        ResultSet rSet;
+        if(playerNum==null)
+            rSet=makeQuery();
+        else
+            rSet=makeQuery(playerNum);
+        JTable jt = new JTable(getData(column,rSet), column);
         jt.setBounds(30, 40, 1000, 3000);
         JScrollPane sp = new JScrollPane(jt);
         frame.add(sp);
@@ -64,6 +83,8 @@ public class DefStats extends Command {
 
     @Override
     public void Execute() {
+        this.playerNum=null;
+
         createAndShowGUI();
     }
 

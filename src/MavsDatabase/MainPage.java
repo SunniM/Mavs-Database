@@ -66,10 +66,12 @@ public class MainPage {
                     allPlayers=true;
                     command.Execute();
                 }
-                else
+                else{
+                    allPlayers=false;
                     playerNum=jTextField.getText();
-                    command.Execute(playerNum);;
-                
+                    if(!playerNum.isEmpty())
+                        command.Execute(playerNum);
+                }
             }
         });
 

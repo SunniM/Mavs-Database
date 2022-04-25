@@ -85,6 +85,7 @@ public class OffStats extends Command{
 
     @Override
     public void Execute() {
+        this.playerNum=null;
         createAndShowGUI();
     }
 

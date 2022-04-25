@@ -14,7 +14,7 @@ public class DLineup extends Command {
     public ResultSet makeQuery() {
         try {
             Statement myStatement = conn.createStatement();
-            myStatement.executeQuery("select * from defensive_stats, players where number=player_num");
+            myStatement.executeQuery("SELECT Number, Name, steals, blocks, defensive_rdb FROM players, defensive_stats WHERE number=PLAYER_NUM AND blocks IN( SELECT blocks FROM players, defensive_stats where number=player_num and defensive_rdb in ( select defensive_rdb from players,defensive_stats where number=player_num order by defensive_rdb desc) order by steals desc) order by blocks desc limit 5;");
             ResultSet myResultSet = myStatement.getResultSet();
             return myResultSet;
         } catch (Exception e) {
@@ -27,7 +27,7 @@ public class DLineup extends Command {
     public void createAndShowGUI() {
 
         JFrame frame = new JFrame("Defensive Statistics");
-        String[] column = {"NAME", "PLAYER_NUM", "STEALS", "BLOCKS", "DEFENSIVE_RDB" };
+        String[] column = {"NUMBER","NAME", "STEALS", "BLOCKS", "DEFENSIVE_RDB" };
         JTable jt = new JTable(getData(column, makeQuery()), column);
         jt.setBounds(30, 40, 1000, 3000);
         JScrollPane sp = new JScrollPane(jt);

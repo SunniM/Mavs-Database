@@ -27,14 +27,34 @@ public class PInfo extends Command {
           return null;
     
     }
+    public ResultSet makeQuery(String number) {
+
+        try {
+            Statement myStatement = conn.createStatement();
+            myStatement.executeQuery("select * from players where number="+number);
+            ResultSet myResultSet = myStatement.getResultSet();
+            return myResultSet;            
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          return null;
+    
+    }
+
 
 
     public  void createAndShowGUI() {
 
         JFrame frame = new JFrame("Player Information");
         String[] column = {"number", "name", "age","height", "weight", "games_played", "years_played","minutes_played","personal_fouls"};
-
-        JTable jt = new JTable(getData(column,makeQuery()), column);
+        
+        ResultSet rSet;
+        if(playerNum==null)
+            rSet=makeQuery();
+        else
+            rSet=makeQuery(playerNum);
+        JTable jt = new JTable(getData(column,rSet), column);
+        
         jt.setBounds(30,40,1000,3000);
         JScrollPane sp=new JScrollPane(jt);
         frame.add(sp);
@@ -70,6 +90,7 @@ public class PInfo extends Command {
 
     @Override
     public void Execute() {
+        this.playerNum=null;
         createAndShowGUI();
     }
     
